@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block content %}
+    {% if current_user.is_anonymous %}
+        {% include 'begin.html' %}
+    {% else %}
+        <h1>Hello, {{ current_user.username }}</h1>
+        {{ render_form(form) }}
+        {% if films %}
+            {% for film in films %}
+                {% include '_filmcard.html' %}
+            {% endfor %}
+        {% else %}
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mt-1">
+                <div class="col">
+                    <h2 align="center">Top-100 films!</h2>
+                    {% for film in films_top %}
+                       {% include '_filmcard.html' %}
+                    {% endfor %}
+                </div>
+            </div>
+            <table>
+                <tr>
+                    <td><a href='{{ url_for('top_100') }}'>View more...</a></td>
+                </tr>
+            </table>
+        {% endif %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,20 @@
+               <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{ film.poster }}" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h6 class="card-title">{{ film.name }}</h6>
+                                <p class="card-text fs-7">{{ film.year }}, {{ film.movieLength }}
+                                    мин, {{ film.ageRating }}+</p>
+                                {% if not current_user.is_viewed(film) %}
+                                    <p><a href="{{ url_for('addfilm', film_id=film.id) }}" class="btn btn-primary"><small>Mark
+                                        as viewed</small></a></p>
+                                {% else %}
+                                    <p class="card-text"><a href="{{ url_for('remove_film', film_id=film.id) }}" class="btn btn-outline-primary"><small class="text-muted">Unseen</small></a></p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>

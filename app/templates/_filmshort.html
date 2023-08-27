@@ -1,0 +1,11 @@
+<table>
+    <tr valign="top">
+        <td><img src="{{ film.poster }}" weight='72px' height="108px" ></td>
+        <td>{{ film.name}}      {{ film.raiting }}<br>{{ film.type }}</td>
+                            {% if not current_user.is_viewed(film) %}
+                        <a href="{{ url_for('addfilm', film_id=film.id) }}">mark as viewed</a><br>
+                    {% else %}
+                        <p>Viewed</p>
+                    {% endif %}
+    </tr>
+</table>

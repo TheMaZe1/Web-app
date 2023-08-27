@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>User: {{ user.username }}</h1>
+    <hr>
+    <h2>My films</h2>
+    <div class="row row-cols-2 g-2 mt-1">
+        <div class="col">
+            {% for film in films %}
+                {% include '_filmcard.html' %}
+            {% endfor %}
+        </div>
+        <div class="col">
+
+            <p>Любимый актер: <br>
+                {% if top_actors|length() >= 1 %}
+                    {{ top_actors[:1] }}
+                {% else %}
+                    None
+                {% endif %}
+            </p>
+            <p>Любимый режисер: <br>
+                {% if top_directors|length() >= 1 %}
+                    {{ top_directors[:1] }}
+                {% else %}
+                    None
+                {% endif %}
+            </p>
+            <p>Любимый жанр: <br>
+                {% if top_genres|length() >= 1 %}
+                    {{ top_genres[:1] }}
+                {% else %}
+                    None
+                {% endif %}
+            </p>
+            <p>Любимый год фильмов:<br>
+                {% if top_years|length() >= 1 %}
+                    {{ top_years[:1] }}
+                {% else %}
+                    None
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    {#    {% for film in films %}#}
+    {#        {% include '_filmshort.html' %}#}
+    {#    {% endfor %}#}
+{% endblock %}
