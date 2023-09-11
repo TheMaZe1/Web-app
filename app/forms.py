@@ -6,17 +6,17 @@ from app.models import User
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    remember_me = BooleanField('Remember Me')
-    submit = SubmitField('Sign In')
+    username = StringField('Имя пользователя', validators=[DataRequired()])
+    password = PasswordField('Пароль', validators=[DataRequired()])
+    remember_me = BooleanField('Запоминить меня')
+    submit = SubmitField('Войти')
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    passwordConfirm = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('Register')
+    username = StringField('Имя пользователя', validators=[DataRequired()])
+    email = StringField('Электронная почта', validators=[DataRequired(), Email()])
+    password = PasswordField('Пароль', validators=[DataRequired()])
+    passwordConfirm = PasswordField('Повторите пароль', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Зарегистрироватся')
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
@@ -30,5 +30,5 @@ class RegistrationForm(FlaskForm):
 
 
 class addFilm(FlaskForm):
-    namefilm = StringField('Search film', validators=[DataRequired()])
-    submit = SubmitField('Search')
+    namefilm = StringField('Поиск фильма', validators=[DataRequired()])
+    submit = SubmitField('Поиск')

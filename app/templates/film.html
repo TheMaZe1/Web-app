@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block nav %}
+    <li class="nav-item"><a href="{{ url_for('index') }}" class="nav-link">Home</a></li>
+    {% if current_user.is_anonymous %}
+        <li class="nav-item"><a href="{{ url_for('login') }}" class="btn btn-outline-primary me-2">Login</a></li>
+    {% else %}
+        <li class="nav-item"><a href="{{ url_for('user', username=current_user.username) }}" class="nav-link"
+                                role="button">Profile</a></li>
+        <li class="nav-item"><a href="{{ url_for('logout') }}" class="btn btn-outline-primary me-2">Logout</a></li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-auto">
+            <img src="{{ film.poster }}" alt="..." height="440" width="300" class="">
+        </div>
+        <div class="col">
+            <div class="row">
+                <div class="col-md-auto">
+                    <h3>{{ film.name }}</h3>
+                    <p>{{ film.year }}, {{ film.movieLength }} мин, {{ film.ageRating }}+</p>
+                    <p>{{ film.genres[0] }}</p>
+                    <br>
+                </div>
+                <div class="col">
+                    <p class="text-end fs-4">{{ film.rating | round(2) }}</p>
+                </div>
+            </div>
+            <p align="justify">{{ film.description }}</p><br>
+
+            {% if not current_user.is_viewed(film) %}
+                <p><a href="{{ url_for('addfilm', film_id=film.id, next=request.url) }}" class="btn btn-primary"><small>Mark
+                    as viewed</small></a></p>
+            {% else %}
+                <p class="card-text"><a href="{{ url_for('remove_film', film_id=film.id, next=request.url) }}"
+                                        class="btn btn-outline-primary"><small class="text-muted">Unseen</small></a></p>
+            {% endif %}
+        </div>
+        <div class="col">
+            <h4>Режиссеры</h4>
+            {% for director in directors %}
+                <div class="d-flex align-items-center border mb-2 rounded">
+                    <div class="flex-shrink-0">
+                        <img src="{{ director.photo }}" alt="..." width="88" height="116" class="rounded-start">
+                    </div>
+                    <div class="flex-grow-1 ms-3 fs-5">
+                        <p>{{ director.name }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            <h4>Актеры</h4>
+            {% for actor in actors %}
+                <div class="d-flex align-items-center border mb-2 rounded">
+                    <div class="flex-shrink-0">
+                        <img src="{{ actor[0].photo }}" alt="..." width="88" height="116" class="rounded-start">
+                    </div>
+                    <div class="flex-grow-1 ms-3 fs-5">
+                        <p>{{ actor[0].name }}</p>
+                        <small>{{ actor[1] }}</small>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

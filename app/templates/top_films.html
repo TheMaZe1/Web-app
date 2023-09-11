@@ -1,7 +1,29 @@
 {% extends 'base.html' %}
+{% from 'bootstrap5/pagination.html' import render_pager, render_pagination %}
+
+{% block nav %}
+        <li class="nav-item"><a href="{{ url_for('index') }}" class="nav-link">Home</a></li>
+    {% if current_user.is_anonymous %}
+        <li class="nav-item"><a href="{{ url_for('login') }}" class="btn btn-outline-primary me-2">Login</a></li>
+    {% else %}
+        <li class="nav-item"><a href="{{ url_for('user', username=current_user.username) }}" class="nav-link"
+                                role="button">Profile</a></li>
+        <li class="nav-item"><a href="{{ url_for('logout') }}" class="btn btn-outline-primary me-2">Logout</a></li>
+    {% endif %}
+{% endblock %}
+
 {% block content %}
-    <h1>Top {{ count }} films</h1>
-    {% for film in films_top %}
-        {% include '_filmshort.html' %}
-    {% endfor %}
+    <h1 align="center">Top {{ count }} films</h1>
+    <div class="row">
+        <div class="col">
+        </div>
+        <div class="col">
+            {% for film in films_top %}
+                {% include '_filmcard.html' %}
+            {% endfor %}
+            {{ render_pagination(films_top) }}
+        </div>
+        <div class="col">
+        </div>
+    </div>
 {% endblock %}

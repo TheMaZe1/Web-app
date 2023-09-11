@@ -1,11 +1,20 @@
 {% extends 'base.html' %}
-{% import 'bootstrap/wtf.html' as wtf %}
+{% from 'bootstrap5/form.html' import render_form %}
 
-{% block app_content %}
-    <h1>Sign In</h1>
-        <div class="row">
-        <div class="col-md-4">
-            {{ wtf.quick_form(form) }}
-        </div>
-    </div>
+{% block nav %}
+    <li class="nav-item"><a href="{{ url_for('index') }}" class="nav-link">Home</a></li>
+    {% if current_user.is_anonymous %}
+        <li class="nav-item"><a href="{{ url_for('login') }}" class="btn btn-outline-primary me-2 active">Login</a></li>
+    {% else %}
+        <li class="nav-item"><a href="{{ url_for('user', username=current_user.username) }}" class="nav-link"
+                                role="button">Profile</a></li>
+        <li class="nav-item"><a href="{{ url_for('logout') }}" class="btn btn-outline-primary me-2">Logout</a></li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <h1>Вход в аккаунт</h1>
+    {{ render_form(form) }}
+    <br>
+    <p>Нет аккунта? Зарегистрируйся <a href="{{ url_for('register') }}">здесь</a></p>
 {% endblock %}
